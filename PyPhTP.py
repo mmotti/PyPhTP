@@ -60,6 +60,17 @@ class PhTP:
         # Remove gravity table entries
         print('[i] Emptying the gravity table')
         self.cursor.execute('DELETE FROM gravity;')
+
+        # Get gravity domain count (should be 0)
+        print('[i] Checking gravity count')
+        self.cursor.execute('SELECT COUNT(DISTINCT domain) FROM gravity')
+        count_db_gravity = self.cursor.fetchall()[0][0]
+
+        # Update gravity_count in info table
+        print('[i] Updating the gravity count in the info table')
+        self.cursor.execute('INSERT OR REPLACE INTO info (property, value) VALUES (?, ?)',
+                            ('gravity_count', count_db_gravity))
+
         self.connection.commit()
 
         # Run Vacuum

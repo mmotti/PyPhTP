@@ -175,7 +175,11 @@ if PhTP_inst.access_check():
             PhTP_inst.close_connection()
             # Moe the database
             PhTP_inst.move_db('eject')
+        else:
+            exit(1)
     # If the inject flag is set
     elif args.inject:
         # Overwrite Pi-hole DB
         PhTP_inst.move_db('inject')
+else:
+    exit(1)

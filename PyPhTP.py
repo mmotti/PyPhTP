@@ -86,6 +86,9 @@ class PhTP:
                 st = os.stat(self.path_pihole_db)
                 os.chown(self.path_output_db, st.st_uid, st.st_gid)
 
+                # Update gravity
+                refresh_gravity()
+
             elif option == 'inject':
                 # Check that a gravity file exists
                 print(f'[i] Checking whether {self.path_output_db} exists')
@@ -98,6 +101,9 @@ class PhTP:
                     # Correct owner etc.
                     print('[i] Correcting permissions')
                     os.chown(self.path_pihole_db, st.st_uid, st.st_gid)
+
+                    # Update gravity
+                    refresh_gravity()
                 else:
                     print('[i] There is no DB to pull')
                     return False
@@ -169,11 +175,7 @@ if PhTP_inst.access_check():
             PhTP_inst.close_connection()
             # Moe the database
             PhTP_inst.move_db('eject')
-            # Refresh Gravity
-            refresh_gravity()
     # If the inject flag is set
     elif args.inject:
         # Overwrite Pi-hole DB
         PhTP_inst.move_db('inject')
-        # Refresh gravity
-        refresh_gravity()

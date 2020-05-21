@@ -104,8 +104,8 @@ class PhTP:
                 # Check that a gravity file exists
                 print(f'[i] Checking whether {self.path_output_db} exists')
                 if os.path.isfile(self.path_output_db) and os.path.getsize(self.path_output_db) > 0:
-                    # Grab owner etc
-                    st = os.stat(self.path_output_db)
+                    # Grab owner etc from existing DB
+                    st = os.stat(self.path_pihole_db)
                     # Overwrite the Pi-hole DB
                     print('[i] Overwriting Pi-hole DB')
                     shutil.move(self.path_output_db, self.path_pihole_db)

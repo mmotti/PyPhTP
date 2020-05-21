@@ -113,6 +113,9 @@ class PhTP:
                     print('[i] Correcting permissions')
                     os.chown(self.path_pihole_db, st.st_uid, st.st_gid)
 
+                    # Refresh Pi-hole in case new lists have been added
+                    # during the injection
+                    refresh_pihole()
                     # Update gravity
                     refresh_gravity()
                 else:
@@ -144,6 +147,11 @@ def refresh_gravity():
 
     print('[i] Refreshing Gravity for source database')
     subprocess.call(['pihole', '-g'], stdout=subprocess.DEVNULL)
+
+
+def refresh_pihole():
+    print('[i] Restarting Pi-hole')
+    subprocess.call(['pihole', 'restartdns', 'reload'], stdout=subprocess.DEVNULL)
 
 
 # Create a new argument parser

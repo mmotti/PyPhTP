@@ -61,13 +61,10 @@ class PhTP:
         print('[i] Emptying the gravity table')
         self.cursor.execute('DELETE FROM gravity;')
 
-        # Get gravity domain count (should be 0)
-        print('[i] Checking gravity count')
-        self.cursor.execute('SELECT COUNT(DISTINCT domain) FROM gravity')
-        count_db_gravity = self.cursor.fetchall()[0][0]
-
         # Update gravity_count in info table
         print('[i] Updating the gravity count in the info table')
+        self.cursor.execute('SELECT COUNT(DISTINCT domain) FROM gravity')
+        count_db_gravity = self.cursor.fetchall()[0][0]
         self.cursor.execute('INSERT OR REPLACE INTO info (property, value) VALUES (?, ?)',
                             ('gravity_count', count_db_gravity))
 
@@ -79,6 +76,9 @@ class PhTP:
 
         # Display size of DB
         print(f'[i] gravity.db size: {round(os.path.getsize(self.path_pihole_db) / (1024 * 1024), 2)} MB')
+
+        # Refresh Pi-hole so the correct gravity count displays
+        refresh_pihole()
 
     def move_db(self, option='eject'):
 

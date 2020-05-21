@@ -12,7 +12,7 @@ class PhTP:
 
         self.path_pihole_dir = r'/etc/pihole'
         self.path_pihole_db = os.path.join(self.path_pihole_dir, 'gravity.db')
-        self.path_output_dir = os.path.join(self.path_pihole_dir, 'PhTP')
+        self.path_output_dir = os.path.join(self.path_pihole_dir, 'PyPhTP')
         self.path_output_db = os.path.join(self.path_output_dir, 'gravity.db')
         self.connection = None
         self.cursor = None
